@@ -34,7 +34,7 @@ mvn -pl escenario-2-builder test
 ## Ejecutar el ejemplo
 
 ```text
-java -cp target/classes ec.edu.utpl.pds.builder.Main
+java -cp target/classes ec.edu.ups.pds.builder.Main
 ```
 
 El diseño está en `builderE2.puml` y la matriz detallada se encuentra en

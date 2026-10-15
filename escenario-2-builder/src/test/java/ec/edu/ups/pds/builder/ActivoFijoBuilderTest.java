@@ -1,4 +1,4 @@
-package ec.edu.utpl.pds.builder;
+package ec.edu.ups.pds.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -13,12 +13,12 @@ class ActivoFijoBuilderTest {
     void construyeActivoConSoloLosDatosObligatorios() {
         ActivoFijo activo =
                 new ActivoFijoBuilder(
-                                "UTPL-MOB-001",
+                                "UPS-MOB-001",
                                 "Escritorio administrativo",
                                 new BigDecimal("425.50"))
                         .construir();
 
-        assertEquals("UTPL-MOB-001", activo.getCodigoInstitucional());
+        assertEquals("UPS-MOB-001", activo.getCodigoInstitucional());
         assertEquals("Escritorio administrativo", activo.getNombreDescripcion());
         assertEquals(new BigDecimal("425.50"), activo.getPrecioAdquisicion());
         assertFalse(activo.getMarca().isPresent());
@@ -32,7 +32,7 @@ class ActivoFijoBuilderTest {
 
         ActivoFijo activo =
                 new ActivoFijoBuilder(
-                                "UTPL-TI-002",
+                                "UPS-TI-002",
                                 "Servidor de aplicaciones",
                                 new BigDecimal("8500.00"))
                         .conMarca("Dell")

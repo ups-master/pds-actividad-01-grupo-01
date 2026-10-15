@@ -1,0 +1,126 @@
+@startuml builderE2
+title Escenario 2 - Registro de activos fijos con Builder (Go)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package "Cliente" {
+    class main <<func>> {
+        + main()
+    }
+}
+
+package "Director" {
+    class DirectorInventario <<struct>> {
+        + ConstruirComputador(b : ConstructorActivoFijo, marca : string, modelo : string, numeroSerie : string, procesador : string, garantiaMeses : int)
+        + ConstruirMesa(b : ConstructorActivoFijo, material : string, dimensiones : string, ubicacion : string, custodio : string)
+        + ConstruirMonitor(b : ConstructorActivoFijo, marca : string, modelo : string, resolucion : string)
+    }
+}
+
+package "Builder" {
+    interface ConstructorActivoFijo <<interface>> {
+        + ConMarca(marca : string) : ConstructorActivoFijo
+        + ConModelo(modelo : string) : ConstructorActivoFijo
+        + ConNumeroSerie(numeroSerie : string) : ConstructorActivoFijo
+        + ConUbicacion(ubicacion : string) : ConstructorActivoFijo
+        + ConCustodio(custodio : string) : ConstructorActivoFijo
+        + ConFechaAdquisicion(fecha : time.Time) : ConstructorActivoFijo
+        + ConGarantia(meses : int) : ConstructorActivoFijo
+        + ConProveedor(proveedor : string) : ConstructorActivoFijo
+        + ConCaracteristica(nombre : string, valor : string) : ConstructorActivoFijo
+        + ConObservaciones(observaciones : string) : ConstructorActivoFijo
+        + Build() : (ActivoFijo, error)
+    }
+
+    class ActivoFijoBuilder <<struct>> {
+        - activo : ActivoFijo
+        {static} + NuevoActivoFijoBuilder(codigo : string, nombre : string, precio : float64) : *ActivoFijoBuilder
+        + ConMarca(marca : string) : ConstructorActivoFijo
+        + ConModelo(modelo : string) : ConstructorActivoFijo
+        + ConNumeroSerie(numeroSerie : string) : ConstructorActivoFijo
+        + ConUbicacion(ubicacion : string) : ConstructorActivoFijo
+        + ConCustodio(custodio : string) : ConstructorActivoFijo
+        + ConFechaAdquisicion(fecha : time.Time) : ConstructorActivoFijo
+        + ConGarantia(meses : int) : ConstructorActivoFijo
+        + ConProveedor(proveedor : string) : ConstructorActivoFijo
+        + ConCaracteristica(nombre : string, valor : string) : ConstructorActivoFijo
+        + ConObservaciones(observaciones : string) : ConstructorActivoFijo
+        + Build() : (ActivoFijo, error)
+    }
+}
+
+package "Product" {
+    class ActivoFijo <<struct>> {
+        .. obligatorios ..
+        - codigo : string
+        - nombre : string
+        - precio : float64
+        .. opcionales ..
+        - marca : string
+        - modelo : string
+        - numeroSerie : string
+        - ubicacion : string
+        - custodio : string
+        - fechaAdquisicion : time.Time
+        - garantiaMeses : int
+        - proveedor : string
+        - caracteristicasTecnicas : map[string]string
+        - observaciones : string
+        __
+        + Codigo() : string
+        + Nombre() : string
+        + Precio() : float64
+        + Marca() : string
+        + Modelo() : string
+        + NumeroSerie() : string
+        + Ubicacion() : string
+        + Custodio() : string
+        + FechaAdquisicion() : time.Time
+        + GarantiaMeses() : int
+        + Proveedor() : string
+        + Caracteristica(nombre : string) : (string, bool)
+        + CaracteristicasTecnicas() : map[string]string
+        + Observaciones() : string
+        + String() : string
+    }
+}
+
+' --- Cliente ---
+main ..> ActivoFijoBuilder : crea con los obligatorios
+main ..> DirectorInventario : usa recetas
+main ..> ActivoFijo : obtiene con Build()
+
+' --- Director: aplica la secuencia de pasos sobre la abstracción ---
+DirectorInventario ..> ConstructorActivoFijo : dirige los pasos
+
+' --- Builder ---
+ConstructorActivoFijo <|.. ActivoFijoBuilder
+ActivoFijoBuilder *-- ActivoFijo : construye (composición)
+ConstructorActivoFijo ..> ActivoFijo : Build()
+
+note right of ActivoFijoBuilder
+  Los obligatorios se exigen al crear el builder.
+  Cada ConXxx() agrega un opcional y devuelve
+  el builder (encadenamiento de métodos).
+  Build() valida y entrega una copia del producto
+  (incluida la ficha técnica), así el ActivoFijo
+  construido no cambia si se sigue usando el builder.
+end note
+
+note right of ActivoFijo
+  Campos privados y solo getters:
+  una vez construido es inmutable.
+  caracteristicasTecnicas = ficha técnica
+  (procesador, material, dimensiones...).
+end note
+
+note bottom of DirectorInventario
+  Recetas reutilizables: definen QUÉ pasos
+  aplicar para cada tipo de activo.
+  Toda construcción pasa por una receta;
+  el cliente obtiene el resultado con b.Build().
+end note
+
+@enduml

@@ -1,0 +1,6 @@
+go 1.25.2
+
+use (
+	./escenario-1-factory-method-go
+	./escenario-2-builder-go
+)
