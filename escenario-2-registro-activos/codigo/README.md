@@ -82,12 +82,13 @@ mvn test
 
 También puede lanzarse desde la raíz del repositorio, donde ejecuta los dos escenarios.
 
-Resultado esperado al verificar este escenario: **14 pruebas, 0 fallos**.
+Resultado esperado al verificar este escenario: **20 pruebas, 0 fallos**.
 
 | Clase de prueba | Qué comprueba |
 |---|---|
-| `ActivoFijoBuilderTest` | Validaciones, datos opcionales e independencia entre productos construidos |
+| `ActivoFijoBuilderTest` | Validaciones de obligatorios y opcionales, garantía en cero, recorte de espacios, estado del builder tras un error e independencia entre productos construidos |
 | `DirectorInventarioTest` | Las secuencias de construcción del director |
+| `MainTest` | Que el ejemplo imprime el activo construido con el builder y el Director |
 | `CorrespondenciaUmlCodigoTest` | Que el diagrama mejorado `../uml/builderE2_mejorado.puml` coincide con el código: participantes, relaciones, campos, modificadores, constructor, firmas y visibilidad de paquete del constructor de `ActivoFijo` |
 
 `CorrespondenciaUmlCodigoTest` lee el `.puml` con la ruta relativa `../uml/builderE2_mejorado.puml`, por lo que

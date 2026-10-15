@@ -116,13 +116,14 @@ Salida esperada: una línea `ActivoFijo{codigoInstitucional='UPS-TI-0001', ...}`
 `CorrespondenciaUmlCodigoTest` comprueba el código contra el diagrama mejorado
 (`uml/builderE2_mejorado.puml`): participantes, relaciones, campos, modificadores, constructor
 obligatorio, firmas y visibilidad de paquete del constructor del producto. Última ejecución:
-14 pruebas, 0 fallos.
+20 pruebas, 0 fallos.
 
 | Clase de pruebas | Cantidad | Comprobaciones principales |
 |---|---:|---|
-| `ActivoFijoBuilderTest` | 5 | Datos obligatorios y opcionales, validaciones e independencia de los productos. |
+| `ActivoFijoBuilderTest` | 10 | Datos obligatorios y opcionales, validaciones, garantía en cero, recorte de espacios, estado tras un error e independencia de los productos. |
 | `CorrespondenciaUmlCodigoTest` | 7 | Participantes, relaciones del UML, campos, modificadores y firmas del diseño. |
 | `DirectorInventarioTest` | 2 | Las dos secuencias de construcción del Director. |
+| `MainTest` | 1 | La salida del ejemplo con el builder y el Director. |
 
 Las pruebas se lanzan con `mvn test` desde `codigo/` o desde la raíz del repositorio, donde el POM
 padre ejecuta los dos escenarios.

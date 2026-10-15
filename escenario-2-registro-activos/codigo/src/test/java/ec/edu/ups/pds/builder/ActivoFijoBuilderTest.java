@@ -3,6 +3,7 @@ package ec.edu.ups.pds.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -98,5 +99,56 @@ class ActivoFijoBuilderTest {
 
         assertEquals("Dell", primero.getMarca().orElseThrow());
         assertEquals("Lenovo", segundo.getMarca().orElseThrow());
+    }
+
+    @Test
+    void aceptaGarantiaDeCeroMeses() {
+        ActivoFijo activo =
+                new ActivoFijoBuilder("AF-1", "Mesa", BigDecimal.TEN).conGarantiaMeses(0).construir();
+
+        assertEquals(0, activo.getGarantiaMeses().orElseThrow());
+    }
+
+    @Test
+    void recortaLosEspaciosDeLosTextos() {
+        ActivoFijo activo =
+                new ActivoFijoBuilder("  AF-1  ", " Mesa de reuniones ", BigDecimal.TEN)
+                        .conMarca("  Ikea ")
+                        .construir();
+
+        assertEquals("AF-1", activo.getCodigoInstitucional());
+        assertEquals("Mesa de reuniones", activo.getNombreDescripcion());
+        assertEquals("Ikea", activo.getMarca().orElseThrow());
+    }
+
+    @Test
+    void rechazaPrecioNegativo() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new ActivoFijoBuilder("AF-1", "Mesa", new BigDecimal("-1")));
+    }
+
+    @Test
+    void rechazaTextosOpcionalesNulosOEnBlanco() {
+        ConstructorActivoFijo builder = new ActivoFijoBuilder("AF-1", "Mesa", BigDecimal.TEN);
+
+        assertThrows(IllegalArgumentException.class, () -> builder.conModelo(null));
+        assertThrows(IllegalArgumentException.class, () -> builder.conNumeroSerie(""));
+        assertThrows(IllegalArgumentException.class, () -> builder.conUbicacion("  "));
+        assertThrows(IllegalArgumentException.class, () -> builder.conCustodio(null));
+        assertThrows(IllegalArgumentException.class, () -> builder.conProveedor(" "));
+        assertThrows(IllegalArgumentException.class, () -> builder.conCaracteristicasTecnicas(""));
+        assertThrows(IllegalArgumentException.class, () -> builder.conObservaciones(null));
+    }
+
+    @Test
+    void unaValidacionFallidaNoAlteraElEstadoDelBuilder() {
+        ConstructorActivoFijo builder =
+                new ActivoFijoBuilder("AF-1", "Mesa", BigDecimal.TEN).conMarca("Ikea");
+
+        assertThrows(IllegalArgumentException.class, () -> builder.conMarca(" "));
+
+        assertEquals("Ikea", builder.construir().getMarca().orElseThrow());
+        assertTrue(builder.construir().getModelo().isEmpty());
     }
 }

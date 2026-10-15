@@ -20,7 +20,7 @@ tipo de retorno de los métodos del Director ya expresa.
 | Builder | `ConstructorActivoFijo` | Interfaz con operaciones fluidas y `construir()` | `CorrespondenciaUmlCodigoTest` |
 | ConcreteBuilder | `ActivoFijoBuilder` | Valida los datos, mantiene el estado parcial y crea instantáneas | Pruebas de validación e independencia |
 | Director | `DirectorInventario` | Encapsula dos secuencias de construcción frecuentes | `DirectorInventarioTest` |
-| Client | `Main` | Configura el builder y solicita el producto al director | Compilación y ejecución del ejemplo |
+| Client | `Main` | Configura el builder y solicita el producto al director | `MainTest` |
 | Product (constructor) | `~ActivoFijo(...)` (solo mejorado) | Constructor con visibilidad de paquete que recibe los 13 atributos | `CorrespondenciaUmlCodigoTest` |
 
 ## Reglas del escenario
