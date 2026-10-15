@@ -1,0 +1,118 @@
+@startuml factoryMethodE1
+title Escenario 1 - Registro vehicular con Factory Method (Go)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+package "Cliente" {
+    class ServicioMatricula <<struct>> {
+        - fabricas : map[string]VehiculoFactory
+        + Registrar(tipo : string, fabrica : VehiculoFactory)
+        + ProcesarMatricula(datos : DatosVehiculoDTO, anioActual : int) : (float64, error)
+    }
+}
+
+package "Creator" {
+    interface VehiculoFactory <<interface>> {
+        + CrearVehiculo(datos : DatosVehiculoDTO) : (Vehiculo, error)
+    }
+
+    class AutoFactory <<struct>> {
+        + CrearVehiculo(datos : DatosVehiculoDTO) : (Vehiculo, error)
+    }
+
+    class CamionetaFactory <<struct>> {
+        + CrearVehiculo(datos : DatosVehiculoDTO) : (Vehiculo, error)
+    }
+
+    class CamionFactory <<struct>> {
+        + CrearVehiculo(datos : DatosVehiculoDTO) : (Vehiculo, error)
+    }
+}
+
+package "Product" {
+    interface Vehiculo <<interface>> {
+        + Placa() : string
+        + CalcularMatricula(anioActual : int) : float64
+    }
+
+    class VehiculoBase <<struct>> {
+        - placa : string
+        - marca : string
+        - modelo : string
+        - anioFabricacion : int
+        - avaluo : float64
+        + Placa() : string
+        + Antiguedad(anioActual : int) : int
+    }
+
+    class Auto <<struct>> {
+        + CalcularMatricula(anioActual : int) : float64
+    }
+
+    class Camioneta <<struct>> {
+        - capacidadPasajeros : int
+        - usoComercial : bool
+        + CalcularMatricula(anioActual : int) : float64
+    }
+
+    class Camion <<struct>> {
+        - tonelaje : float64
+        - numeroEjes : int
+        + CalcularMatricula(anioActual : int) : float64
+    }
+}
+
+class DatosVehiculoDTO <<struct>> {
+    + Tipo : string
+    + Placa : string
+    + Marca : string
+    + Modelo : string
+    + AnioFabricacion : int
+    + Avaluo : float64
+    + CapacidadPasajeros : int
+    + UsoComercial : bool
+    + Tonelaje : float64
+    + NumeroEjes : int
+}
+
+' --- Cliente: solo conoce abstracciones ---
+ServicioMatricula o-- "1..*" VehiculoFactory : fabricas registradas
+ServicioMatricula ..> Vehiculo : utiliza
+ServicioMatricula ..> DatosVehiculoDTO : recibe
+
+' --- Creator: implementación implícita de la interfaz ---
+VehiculoFactory <|.. AutoFactory
+VehiculoFactory <|.. CamionetaFactory
+VehiculoFactory <|.. CamionFactory
+
+AutoFactory ..> Auto : <<create>>
+CamionetaFactory ..> Camioneta : <<create>>
+CamionFactory ..> Camion : <<create>>
+
+' --- Product: composición mediante embedding ---
+Vehiculo <|.. Auto
+Vehiculo <|.. Camioneta
+Vehiculo <|.. Camion
+
+Auto *-- VehiculoBase : embebe
+Camioneta *-- VehiculoBase : embebe
+Camion *-- VehiculoBase : embebe
+
+note right of VehiculoBase
+  Go no tiene herencia: los datos comunes
+  se reutilizan por composición (embedding).
+  Placa() se promueve a Auto, Camioneta y
+  Camion, que completan la interfaz Vehiculo
+  con su propio CalcularMatricula().
+end note
+
+note bottom of ServicioMatricula
+  Selección en tiempo de ejecución:
+  fabricas[datos.Tipo].CrearVehiculo(datos)
+  Agregar Motocicleta = nuevo struct + nueva
+  fábrica + Registrar(); este código no cambia (OCP).
+end note
+
+@enduml
