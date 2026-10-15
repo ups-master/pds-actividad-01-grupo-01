@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 class CorrespondenciaUmlCodigoTest {
     @Test
     void contieneTodasLasClasesDeclaradasEnElUml() throws Exception {
-        String uml = Files.readString(Path.of("factoryMethodE1.puml"));
+        String uml = Files.readString(Path.of("..", "uml", "factoryMethodE1_mejorado.puml"));
         List<Class<?>> clases =
                 List.of(
                         DatosVehiculo.class,
@@ -95,6 +95,42 @@ class CorrespondenciaUmlCodigoTest {
         Method main = Main.class.getDeclaredMethod("main", String[].class);
         assertTrue(Modifier.isPublic(main.getModifiers()));
         assertTrue(Modifier.isStatic(main.getModifiers()));
+    }
+
+    @Test
+    void elUmlMejoradoCoincideConDatosVehiculo() throws Exception {
+        String uml = Files.readString(Path.of("..", "uml", "factoryMethodE1_mejorado.puml"));
+
+        assertTrue(uml.contains("Vehiculo \"1\" *-- \"1\" DatosVehiculo : contiene"));
+        assertFalse(uml.contains("Vehiculo --> DatosVehiculo"));
+        assertFalse(uml.contains("set"), "El UML no debe declarar operaciones de modificacion");
+
+        assertConstructorPublico(
+                DatosVehiculo.class,
+                String.class,
+                String.class,
+                String.class,
+                int.class,
+                BigDecimal.class);
+        assertConsulta("getPlaca", String.class, uml);
+        assertConsulta("getMarca", String.class, uml);
+        assertConsulta("getModelo", String.class, uml);
+        assertConsulta("getAnioFabricacion", int.class, uml);
+        assertConsulta("getAvaluo", BigDecimal.class, uml);
+
+        for (Method metodo : DatosVehiculo.class.getDeclaredMethods()) {
+            assertFalse(metodo.getName().startsWith("set"), metodo.getName());
+        }
+    }
+
+    private static void assertConsulta(String nombre, Class<?> retorno, String uml)
+            throws Exception {
+        Method consulta = DatosVehiculo.class.getDeclaredMethod(nombre);
+        assertEquals(retorno, consulta.getReturnType());
+        assertTrue(Modifier.isPublic(consulta.getModifiers()));
+        assertTrue(
+                uml.contains("+ " + nombre + "() : " + retorno.getSimpleName()),
+                "Falta en el UML mejorado: " + nombre);
     }
 
     private static void assertCampo(
