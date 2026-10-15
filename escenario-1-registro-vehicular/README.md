@@ -142,7 +142,7 @@ Salida esperada: `Tipo: auto | Placa: ABC-1234 | Matricula: $352.00`.
 ### Verificación UML contra código
 
 `CorrespondenciaUmlCodigoTest` comprueba el código contra el diagrama mejorado
-(`uml/factoryMethodE1_mejorado.puml`). Última ejecución: 14 pruebas, 0 fallos.
+(`uml/factoryMethodE1_mejorado.puml`). Última ejecución: 20 pruebas, 0 fallos.
 
 ## Uso crítico de inteligencia artificial
 

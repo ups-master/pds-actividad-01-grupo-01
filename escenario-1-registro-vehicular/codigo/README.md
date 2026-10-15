@@ -127,11 +127,12 @@ mvn test
 
 También puede lanzarse desde la raíz del repositorio, donde ejecuta los dos escenarios.
 
-Resultado esperado al verificar este escenario: **14 pruebas, 0 fallos**.
+Resultado esperado al verificar este escenario: **20 pruebas, 0 fallos**.
 
 | Clase de prueba | Qué comprueba |
 |---|---|
 | `CalculoMatriculaTest` | Reglas de cálculo y validaciones de entrada |
+| `MainTest` | La salida de `Main` para cada tipo, el tipo sin distinguir mayúsculas, la ayuda sin argumentos y los mensajes de error por tipo o año inválidos |
 | `FactoryMethodTest` | Que cada creador concreto instancia el producto correcto y que el cálculo se hace mediante `Vehiculo` |
 | `CorrespondenciaUmlCodigoTest` | Que el diagrama mejorado `../uml/factoryMethodE1_mejorado.puml` coincide con el código: clases, jerarquías, atributos, visibilidad, constructores, operaciones, getters de `DatosVehiculo`, ausencia de setters y composición `contiene` |
 
