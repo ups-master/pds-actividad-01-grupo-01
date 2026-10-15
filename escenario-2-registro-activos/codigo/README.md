@@ -51,6 +51,18 @@ java -cp target/classes ec.edu.ups.pds.builder.Main
 El `pom.xml` de este módulo hereda del POM padre de la raíz del repositorio (`../../pom.xml`), que fija
 Java 21 y la versión de JUnit. Desde la raíz, `mvn test` compila y prueba los dos escenarios.
 
+### Ejemplo de salida
+
+`Main` construye un computador Dell Latitude con los datos obligatorios, seis opcionales y la ubicación y
+el custodio que asigna el Director. Salida real:
+
+```text
+ActivoFijo{codigoInstitucional='UPS-TI-0001', nombreDescripcion='Computador portátil para desarrollo', precioAdquisicion=1450.00, marca='Dell', modelo='Latitude', numeroSerie='SN-2026-001', ubicacion='Laboratorio de Software', custodio='Ana Pérez', fechaAdquisicion=2026-10-12, garantiaMeses=36, proveedor='Tecnología Andina', caracteristicasTecnicas='null', observaciones='null'}
+```
+
+Los datos opcionales que no se configuraron (`caracteristicasTecnicas` y `observaciones`) aparecen como
+`null` solo en `toString()`. Sus getters devuelven `Optional.empty()`.
+
 ## 4. Datos del activo
 
 - **Obligatorios:** código institucional, nombre o descripción y precio de adquisición (se pasan al
