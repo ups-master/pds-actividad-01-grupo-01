@@ -1,4 +1,4 @@
-package ec.edu.utpl.pds.builder;
+package ec.edu.ups.pds.builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ public final class Main {
     public static void main(String[] args) {
         ConstructorActivoFijo builder =
                 new ActivoFijoBuilder(
-                                "UTPL-TI-0001",
+                                "UPS-TI-0001",
                                 "Computador portátil para desarrollo",
                                 new BigDecimal("1450.00"))
                         .conMarca("Dell")

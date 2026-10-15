@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>ec.edu.utpl.pds</groupId>
+        <groupId>ec.edu.ups.pds</groupId>
         <artifactId>patrones-creacionales-actividad-01</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>registro-activos-builder</artifactId>

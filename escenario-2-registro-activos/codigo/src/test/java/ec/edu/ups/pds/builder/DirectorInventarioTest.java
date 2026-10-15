@@ -1,4 +1,4 @@
-package ec.edu.utpl.pds.builder;
+package ec.edu.ups.pds.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,7 +12,7 @@ class DirectorInventarioTest {
     void construyeActivoAsignadoUsandoLaAbstraccionBuilder() {
         ConstructorActivoFijo builder =
                 new ActivoFijoBuilder(
-                        "UTPL-MOB-010", "Silla ergonómica", new BigDecimal("210.00"));
+                        "UPS-MOB-010", "Silla ergonómica", new BigDecimal("210.00"));
 
         ActivoFijo activo =
                 director.construirActivoAsignado(builder, "Edificio 3", "María Torres");
@@ -25,7 +25,7 @@ class DirectorInventarioTest {
     void construyeEquipoConGarantiaMedianteUnaSecuenciaReutilizable() {
         ConstructorActivoFijo builder =
                 new ActivoFijoBuilder(
-                        "UTPL-TI-020", "Estación de trabajo", new BigDecimal("2400.00"));
+                        "UPS-TI-020", "Estación de trabajo", new BigDecimal("2400.00"));
 
         ActivoFijo activo =
                 director.construirEquipoConGarantia(

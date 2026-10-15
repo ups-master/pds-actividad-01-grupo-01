@@ -1,4 +1,4 @@
-package ec.edu.utpl.pds.builder;
+package ec.edu.ups.pds.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class CorrespondenciaUmlCodigoTest {
     @Test
     void umlDeclaraTodosLosParticipantesBuilder() throws Exception {
-        String uml = Files.readString(Path.of("builderE2.puml"));
+        String uml = Files.readString(Path.of("..", "uml", "builderE2_mejorado.puml"));
 
         for (String nombre :
                 List.of(
@@ -29,7 +29,7 @@ class CorrespondenciaUmlCodigoTest {
         }
         assertTrue(uml.contains("ConstructorActivoFijo <|.. ActivoFijoBuilder"));
         assertTrue(uml.contains("ActivoFijoBuilder ..> ActivoFijo"));
-        assertTrue(uml.contains("DirectorInventario --> ConstructorActivoFijo"));
+        assertTrue(uml.contains("DirectorInventario ..> ConstructorActivoFijo"));
     }
 
     @Test
@@ -62,6 +62,32 @@ class CorrespondenciaUmlCodigoTest {
             assertTrue(Modifier.isPrivate(field.getModifiers()), campo);
             assertTrue(Modifier.isFinal(field.getModifiers()), campo);
         }
+    }
+
+    @Test
+    void constructorDelProductoTieneVisibilidadDePaquete() throws Exception {
+        int modificadores =
+                ActivoFijo.class
+                        .getDeclaredConstructor(
+                                String.class,
+                                String.class,
+                                BigDecimal.class,
+                                String.class,
+                                String.class,
+                                String.class,
+                                String.class,
+                                String.class,
+                                LocalDate.class,
+                                Integer.class,
+                                String.class,
+                                String.class,
+                                String.class)
+                        .getModifiers();
+
+        assertTrue(
+                !Modifier.isPublic(modificadores)
+                        && !Modifier.isProtected(modificadores)
+                        && !Modifier.isPrivate(modificadores));
     }
 
     @Test
