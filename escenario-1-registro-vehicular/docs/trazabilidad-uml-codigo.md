@@ -20,7 +20,7 @@ diagramas.
 | `Vehiculo "1" *-- "1" DatosVehiculo : contiene` (solo mejorado) | Campo `datos` obligatorio en `Vehiculo`, inicializado en el constructor | Inspección de código |
 | `Vehiculo` | Clase abstracta con `datos` protegido y `calcularMatricula(int)` abstracto | Reflexión y pruebas de cálculo |
 | `Auto`, `Camioneta`, `Camion` | Productos concretos que extienden `Vehiculo` | Reflexión y `CalculoMatriculaTest` |
-| `RegistroVehicular` | Creador abstracto con factory method `crearVehiculo` y operación concreta `calcularMatricula` | Reflexión y `FactoryMethodTest` |
+| `RegistroVehicular` | Creador abstracto con factory method `crearVehiculo` y operación concreta `calcularMatricula` | Reflexión, `FactoryMethodTest` y `ExtensibilidadFactoryMethodTest` |
 | `RegistroAuto`, `RegistroCamioneta`, `RegistroCamion` | Creadores concretos que instancian el producto correspondiente | `FactoryMethodTest` |
 | `Main` | Selecciona el creador en tiempo de ejecución y trabaja mediante `RegistroVehicular` | Inspección de firma y `MainTest` |
 
@@ -61,4 +61,4 @@ mvn test
 La prueba `CorrespondenciaUmlCodigoTest` verifica el código contra el diagrama mejorado
 `../uml/factoryMethodE1_mejorado.puml`: falla si falta cualquiera de las diez clases, y comprueba
 que `DatosVehiculo` tenga el constructor y los cinco getters del UML, ningún setter y la composición
-`Vehiculo "1" *-- "1" DatosVehiculo : contiene`. Resultado de la última ejecución: 20 pruebas, 0 fallos.
+`Vehiculo "1" *-- "1" DatosVehiculo : contiene`. Resultado de la última ejecución: 28 pruebas, 0 fallos.
