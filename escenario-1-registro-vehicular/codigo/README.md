@@ -60,9 +60,8 @@ mvn clean compile
 java -cp target/classes ec.edu.ups.pds.factorymethod.Main auto ABC-1234 Toyota Corolla 2020 20000 0 2026
 ```
 
-> **Nota sobre Maven:** el `pom.xml` de este módulo declara un POM padre en `../../pom.xml`
-> (`patrones-creacionales-actividad-01`). Ese archivo debe existir en la raíz del repositorio para que
-> `mvn` funcione. Si no existe, usa la Opción A para compilar y ejecutar.
+El `pom.xml` de este módulo hereda del POM padre de la raíz del repositorio (`../../pom.xml`), que fija
+Java 21 y la versión de JUnit. Desde la raíz, `mvn test` compila y prueba los dos escenarios.
 
 ## 4. Uso del programa
 
@@ -125,6 +124,8 @@ Ejemplo del auto: `20000 × 0,02 = 400`; antigüedad `2026 − 2020 = 6` años, 
 ```text
 mvn test
 ```
+
+También puede lanzarse desde la raíz del repositorio, donde ejecuta los dos escenarios.
 
 Resultado esperado al verificar este escenario: **14 pruebas, 0 fallos**.
 

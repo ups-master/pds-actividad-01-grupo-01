@@ -124,9 +124,8 @@ obligatorio, firmas y visibilidad de paquete del constructor del producto. Últi
 | `CorrespondenciaUmlCodigoTest` | 7 | Participantes, relaciones del UML, campos, modificadores y firmas del diseño. |
 | `DirectorInventarioTest` | 2 | Las dos secuencias de construcción del Director. |
 
-> Maven: el `pom.xml` declara un POM padre en `../../pom.xml` que aún no existe en el repositorio,
-> así que `mvn` no arranca tal como está. Ejecutamos las pruebas compilando con el JDK y lanzándolas
-> con JUnit Platform.
+Las pruebas se lanzan con `mvn test` desde `codigo/` o desde la raíz del repositorio, donde el POM
+padre ejecuta los dos escenarios.
 
 ## Uso crítico de inteligencia artificial
 

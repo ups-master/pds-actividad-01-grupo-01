@@ -126,7 +126,7 @@ Versión final, con constructor y consultas en `DatosVehiculo` y composición 1 
 
 - Código: [`codigo/src/main/java/ec/edu/ups/pds/factorymethod`](codigo/src/main/java/ec/edu/ups/pds/factorymethod)
 - Pruebas: [`codigo/src/test/java/ec/edu/ups/pds/factorymethod`](codigo/src/test/java/ec/edu/ups/pds/factorymethod)
-- **Manual de uso** (requisitos, compilación, ejecución, argumentos, reglas de cálculo, pruebas y cómo agregar un tipo de vehículo): [`codigo/README.md`](codigo/README.md)
+- Manual de uso (requisitos, compilación, ejecución, argumentos, reglas de cálculo, pruebas y cómo agregar un tipo de vehículo): [`codigo/README.md`](codigo/README.md)
 - Trazabilidad entre el UML y el código: [`docs/trazabilidad-uml-codigo.md`](docs/trazabilidad-uml-codigo.md)
 
 Inicio rápido, desde `escenario-1-registro-vehicular/codigo`:
