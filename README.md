@@ -81,7 +81,7 @@ Requisitos: JDK 21 o superior y Maven 3.9 o posterior.
 mvn test
 ```
 
-Desde la raíz ejecuta los dos escenarios y debe dar 14 pruebas por escenario, sin fallos. Cada
+Desde la raíz ejecuta los dos escenarios y debe dar 20 pruebas por escenario, sin fallos. Cada
 escenario también puede probarse y ejecutarse por separado desde su carpeta `codigo/`; las
 instrucciones están en su manual de uso:
 
@@ -92,7 +92,7 @@ instrucciones están en su manual de uso:
 
 Factory Method encajó en el escenario 1 porque el tipo de vehículo solo se conoce en ejecución. Los creadores concretos instancian cada vehículo y la operación principal usa únicamente `RegistroVehicular` y `Vehiculo`, así que agregar una motocicleta pide una subclase, su creador y una opción en `Main`, sin modificar lo demás. En el escenario 2, Builder nos permitió armar activos fijos paso a paso: se parte de los tres datos obligatorios y se suman solo los opcionales que apliquen, sin sobrecargas ni valores vacíos. El producto es inmutable y el Director reúne dos secuencias que se repiten.
 
-En ambos escenarios una prueba compara el código con el diagrama mejorado, y las 14 pruebas de cada uno pasan al ejecutar `mvn test` desde la raíz del repositorio.
+En ambos escenarios una prueba compara el código con el diagrama mejorado, y las 20 pruebas de cada uno pasan al ejecutar `mvn test` desde la raíz del repositorio.
 
 Usamos la IA para revisar los diseños y contrastamos cada recomendación con el UML y el código. En el escenario 1 incorporamos el constructor y las consultas de `DatosVehiculo` y rechazamos Strategy, porque el cálculo depende solo del tipo de vehículo. En el escenario 2 mantuvimos y documentamos las validaciones que ya existían, y descartamos eliminar el Director y la interfaz, porque ya hay dos secuencias reutilizables.
 
