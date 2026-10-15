@@ -1,0 +1,100 @@
+@startuml
+title Escenario 2 - Registro de activos fijos con Builder (mejorado)
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam class {
+  BackgroundColor<<Product>> #E8F5E9
+  BackgroundColor<<Builder>> #E3F2FD
+  BackgroundColor<<ConcreteBuilder>> #E3F2FD
+  BackgroundColor<<Director>> #FFF8E1
+  BackgroundColor<<Client>> #F3E5F5
+}
+
+interface ConstructorActivoFijo <<Builder>> {
+  +conMarca(marca: String): ConstructorActivoFijo
+  +conModelo(modelo: String): ConstructorActivoFijo
+  +conNumeroSerie(numeroSerie: String): ConstructorActivoFijo
+  +conUbicacion(ubicacion: String): ConstructorActivoFijo
+  +conCustodio(custodio: String): ConstructorActivoFijo
+  +conFechaAdquisicion(fechaAdquisicion: LocalDate): ConstructorActivoFijo
+  +conGarantiaMeses(garantiaMeses: int): ConstructorActivoFijo
+  +conProveedor(proveedor: String): ConstructorActivoFijo
+  +conCaracteristicasTecnicas(caracteristicasTecnicas: String): ConstructorActivoFijo
+  +conObservaciones(observaciones: String): ConstructorActivoFijo
+  +construir(): ActivoFijo
+}
+
+class ActivoFijoBuilder <<ConcreteBuilder>> {
+  -codigoInstitucional: String {readOnly}
+  -nombreDescripcion: String {readOnly}
+  -precioAdquisicion: BigDecimal {readOnly}
+  -marca: String [0..1]
+  -modelo: String [0..1]
+  -numeroSerie: String [0..1]
+  -ubicacion: String [0..1]
+  -custodio: String [0..1]
+  -fechaAdquisicion: LocalDate [0..1]
+  -garantiaMeses: Integer [0..1]
+  -proveedor: String [0..1]
+  -caracteristicasTecnicas: String [0..1]
+  -observaciones: String [0..1]
+  +ActivoFijoBuilder(codigoInstitucional: String, nombreDescripcion: String, precioAdquisicion: BigDecimal)
+}
+
+class ActivoFijo <<Product>> {
+  -codigoInstitucional: String {readOnly}
+  -nombreDescripcion: String {readOnly}
+  -precioAdquisicion: BigDecimal {readOnly}
+  -marca: String [0..1] {readOnly}
+  -modelo: String [0..1] {readOnly}
+  -numeroSerie: String [0..1] {readOnly}
+  -ubicacion: String [0..1] {readOnly}
+  -custodio: String [0..1] {readOnly}
+  -fechaAdquisicion: LocalDate [0..1] {readOnly}
+  -garantiaMeses: Integer [0..1] {readOnly}
+  -proveedor: String [0..1] {readOnly}
+  -caracteristicasTecnicas: String [0..1] {readOnly}
+  -observaciones: String [0..1] {readOnly}
+  ~ActivoFijo(los 13 atributos)
+}
+
+class DirectorInventario <<Director>> {
+  +construirActivoAsignado(builder: ConstructorActivoFijo, ubicacion: String, custodio: String): ActivoFijo
+  +construirEquipoConGarantia(builder: ConstructorActivoFijo, marca: String, modelo: String, numeroSerie: String, proveedor: String, garantiaMeses: int): ActivoFijo
+}
+
+class Main <<Client>> {
+  +{static} main(args: String[]): void
+}
+
+ConstructorActivoFijo <|.. ActivoFijoBuilder
+ActivoFijoBuilder ..> ActivoFijo : construye
+DirectorInventario ..> ConstructorActivoFijo : usa por parámetro
+Main ..> ActivoFijoBuilder
+Main ..> DirectorInventario
+
+note right of ActivoFijoBuilder
+  Validaciones:
+  - código y descripción: no nulos ni en blanco
+  - precio: mayor que cero
+  - texto opcional dado: no nulo ni en blanco
+  - garantía dada: cero o positiva
+  Cada construir() crea un ActivoFijo nuevo.
+end note
+
+note bottom of ActivoFijo
+  ~ = visibilidad de paquete: solo el builder
+  lo instancia. Los getters opcionales
+  devuelven Optional.
+end note
+
+legend bottom
+  [0..1] = dato opcional · {readOnly} = solo lectura
+  Omitidos por legibilidad (existen en el código): getters de
+  ActivoFijo, toString() y las operaciones de configuración
+  repetidas en ActivoFijoBuilder.
+end legend
+
+@enduml
