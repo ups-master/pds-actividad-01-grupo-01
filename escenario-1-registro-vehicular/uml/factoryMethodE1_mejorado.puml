@@ -1,0 +1,89 @@
+@startuml
+title Escenario 1 - Registro vehicular con Factory Method
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+
+class DatosVehiculo {
+    - placa : String
+    - marca : String
+    - modelo : String
+    - anioFabricacion : int
+    - avaluo : BigDecimal
+    + DatosVehiculo(placa : String, marca : String, modelo : String, anioFabricacion : int, avaluo : BigDecimal)
+    + getPlaca() : String
+    + getMarca() : String
+    + getModelo() : String
+    + getAnioFabricacion() : int
+    + getAvaluo() : BigDecimal
+}
+
+abstract class Vehiculo {
+    # datos : DatosVehiculo
+    + Vehiculo(datos : DatosVehiculo)
+    {abstract} + calcularMatricula(anioActual : int) : BigDecimal
+}
+
+class Auto {
+    + Auto(datos : DatosVehiculo)
+    + calcularMatricula(anioActual : int) : BigDecimal
+}
+
+class Camioneta {
+    - capacidadCargaKg : double
+    + Camioneta(datos : DatosVehiculo, capacidadCargaKg : double)
+    + calcularMatricula(anioActual : int) : BigDecimal
+}
+
+class Camion {
+    - tonelaje : double
+    + Camion(datos : DatosVehiculo, tonelaje : double)
+    + calcularMatricula(anioActual : int) : BigDecimal
+}
+
+abstract class RegistroVehicular {
+    {abstract} + crearVehiculo(datos : DatosVehiculo) : Vehiculo
+    + calcularMatricula(datos : DatosVehiculo, anioActual : int) : BigDecimal
+}
+
+class RegistroAuto {
+    + crearVehiculo(datos : DatosVehiculo) : Vehiculo
+}
+
+class RegistroCamioneta {
+    - capacidadCargaKg : double
+    + RegistroCamioneta(capacidadCargaKg : double)
+    + crearVehiculo(datos : DatosVehiculo) : Vehiculo
+}
+
+class RegistroCamion {
+    - tonelaje : double
+    + RegistroCamion(tonelaje : double)
+    + crearVehiculo(datos : DatosVehiculo) : Vehiculo
+}
+
+class Main {
+    + main(args : String[]) : void
+}
+
+Vehiculo <|-- Auto
+Vehiculo <|-- Camioneta
+Vehiculo <|-- Camion
+Vehiculo "1" *-- "1" DatosVehiculo : contiene
+
+RegistroVehicular <|-- RegistroAuto
+RegistroVehicular <|-- RegistroCamioneta
+RegistroVehicular <|-- RegistroCamion
+
+RegistroVehicular ..> Vehiculo : crea y utiliza
+RegistroAuto ..> Auto : instancia
+RegistroCamioneta ..> Camioneta : instancia
+RegistroCamion ..> Camion : instancia
+
+Main ..> RegistroVehicular : utiliza
+Main ..> RegistroAuto : selecciona
+Main ..> RegistroCamioneta : selecciona
+Main ..> RegistroCamion : selecciona
+
+
+@enduml
