@@ -1,6 +1,7 @@
 package ec.edu.ups.pds.builder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
@@ -36,5 +37,25 @@ class DirectorInventarioTest {
         assertEquals("WS-020", activo.getNumeroSerie().orElseThrow());
         assertEquals("CompuEmpresa", activo.getProveedor().orElseThrow());
         assertEquals(36, activo.getGarantiaMeses().orElseThrow());
+    }
+
+    @Test
+    void exigeUnBuilder() {
+        assertThrows(
+                NullPointerException.class,
+                () -> director.construirActivoAsignado(null, "Edificio 3", "María Torres"));
+        assertThrows(
+                NullPointerException.class,
+                () -> director.construirEquipoConGarantia(null, "Lenovo", "T", "S", "P", 12));
+    }
+
+    @Test
+    void laValidacionDelBuilderSePropagaAlDirector() {
+        ConstructorActivoFijo builder =
+                new ActivoFijoBuilder("UPS-MOB-011", "Silla", new BigDecimal("50.00"));
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> director.construirEquipoConGarantia(builder, "Lenovo", "T", "S", "P", -1));
     }
 }

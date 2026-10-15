@@ -16,7 +16,7 @@ tipo de retorno de los métodos del Director ya expresa.
 
 | Rol Builder | Elemento UML | Implementación Java | Verificación |
 |---|---|---|---|
-| Product | `ActivoFijo` | Clase final e inmutable con tres datos obligatorios y diez opcionales | `ActivoFijoBuilderTest` y reflexión |
+| Product | `ActivoFijo` | Clase final e inmutable con tres datos obligatorios y diez opcionales | `ActivoFijoBuilderTest`, `ActivoFijoTest` y reflexión |
 | Builder | `ConstructorActivoFijo` | Interfaz con operaciones fluidas y `construir()` | `CorrespondenciaUmlCodigoTest` |
 | ConcreteBuilder | `ActivoFijoBuilder` | Valida los datos, mantiene el estado parcial y crea instantáneas | Pruebas de validación e independencia |
 | Director | `DirectorInventario` | Encapsula dos secuencias de construcción frecuentes | `DirectorInventarioTest` |
